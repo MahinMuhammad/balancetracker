@@ -1,56 +1,66 @@
 <?php  
-
+    ini_set('display_errors', 1);
+    error_reporting(E_ALL|E_STRICT); //to catch error
     if(!isset($_COOKIE['status']))
     {
         header('location: login.html');
     }
+    require_once "../model/userModel.php";
+
+    $income = getIncome($_COOKIE['status']);
+    $expense = getExpense($_COOKIE['status']);
 ?>
 <html>
 <head>
     <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../asset/homeDes.css">
+    <script type="text/javascript" src="../asset/balanceAddVal.js"></script>
 </head>
     <body>
-        <fieldset align=center>
-            <legend>HOME</legend>
-            <table align="center" width="100%">
-                <tr align="center">
-                    <td width="300"><a href='home.php'> ADD ACCOUNT </a></td>
-                    <td><a href='Settings.php'> SETTINGS </a></td>
-                    <td><a href='home.php'> ABOUT US </a></td>
-                    <td><a href='../control/logout.php'> LOGOUT </a></td>
-                </tr>
-            </table>
-            <h1>Wellcome <?php require_once "../model/userModel.php"; echo getRealName($_COOKIE['status']);?> </h1>
-            <h2>Account List</h2>
-            <form method="post" action="../control/accountCheck.php" enctype="">
-                <table width="150" border="2" align="center">
-                    <tr align="center">
-                        <td>
-                            <select name="AccountId">
-                                <?php
-                                    $list = getAccountList($_COOKIE['status']);
-                                    if(count($list) == 0)
-                                    {
-                                        echo "<option value='empty'>Create Account</option>";
-                                    }
-                                    else
-                                    {
-                                        for ($i=0; $i < count($list); $i++) 
-                                        { 
-                                            echo "<option value='".$list[$i]['AccountId']."'>".$list[$i]['AccountName']."</option>";
-                                        } 
-                                    }
-                                ?>                         
-                            </select>
-                        </td>
+        <nav class="navbar navbar-expand-sm bg-light justify-content-center">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="loadBalanceAddForm('../view/incomeForm.php');">ADD INCOME</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="loadBalanceAddForm('../view/expenseForm.php');">ADD EXPENSE</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick= "alert('Will be availavle on next update!')">SETTINGS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick= "alert('An balance tracker webapp developed my Mahinur Rahman.')">ABOUT</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href='../control/logout.php'> LOGOUT </a>
+                </li>
+            </ul>
+        </nav>
+        <div id="outerBox">
+            <div id="innerBox">
+                <table width="100%">
+                    <tr>
+                        <td>Total Income</td>
+                        <td align="right"><?php echo $income; ?></td>
                     </tr>
-                    <tr align="center">
-                        <td><input type="submit" name="submit" value="OPEN"></td>
+                    <tr>
+                        <td>Total Expense</td>
+                        <td align="right"><?php echo $expense; ?></td>
                     </tr>
                 </table>
-            </form>
+                <hr>
+                <table width="100%">
+                    <tr>
+                        <td>Current Balance</td>
+                        <td align="right"><?php echo  $income-$expense; ?></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div id="extraFormSpace">
             
-        </fieldset>
+        </div>
     </body>
 </html>
 

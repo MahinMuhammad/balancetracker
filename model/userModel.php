@@ -43,81 +43,47 @@
         }
     }
 
-//     function getRow($userName)
-//     {
-//         $conn = getConnection();
-//         $sql = "select * from userTab where UserName='{$userName}'";
-//         $result = mysqli_query($conn, $sql);
-//         $value = mysqli_fetch_assoc($result);
-//         return $value;
-//     }
+    function addIncome($amount, $userName){
+        $conn = getConnection();
+        $sql = "update user_tab set income=income+'{$amount}' where user_name='{$userName}'";
+        if(mysqli_query($conn, $sql))
+        {
+            return true;
+        }else{
+            return false;
+        }
+    }
 
-//     function getUserName($userName)
-//     {
-//         $value = getRow($userName);
-//         return $value['UserName'];
-//     }
+    function addExpense($amount, $userName){
+        $conn = getConnection();
+        $sql = "update user_tab set expense=expense+'{$amount}' where user_name='{$userName}'";
+        if(mysqli_query($conn, $sql))
+        {
+            return true;
+        }else{
+            return false;
+        }
+    }
 
-//     function getRealName($userName)
-//     {
-//         $value = getRow($userName);
-//         return $value['RealName'];
-//     }
+    function getRow($userName)
+    {
+        $conn = getConnection();
+        $sql = "select * from user_tab where user_name='{$userName}'";
+        $result = mysqli_query($conn, $sql);
+        $value = mysqli_fetch_assoc($result);
+        return $value;
+    }
 
-//     function changePass($userName, $password, $passwordNew)
-//     {
-//         $conn = getConnection();
-//         $sql = "update userTab set Pass='{$passwordNew}' where UserName='{$userName}' and Pass='{$password}'";
-//         mysqli_query($conn, $sql);
-//         if(mysqli_affected_rows($conn))
-//         {
-//             return true;
-//         }else{
-//             return false;
-//         }
-//     }
+    function getIncome($userName){
+        $value = getRow($userName);
+        return $value['income'];
+    }
 
-//     function changeInfo($userName, $newRealName, $newUserName)
-//     {
-//         $conn = getConnection();
-//         $sql = "update userTab set RealName='{$newRealName}', UserName='{$newUserName}' where UserName='{$userName}'";
-//         mysqli_query($conn, $sql);
-//         if(mysqli_affected_rows($conn))
-//         {
-//             return true;
-//         }else{
-//             return false;
-//         }
-//     }
-
-//     function deleteUser($userName, $password)
-//     {
-//         $conn = getConnection();
-//         $sql = "delete from userTab where UserName='{$userName}' and Pass='{$password}'";
-//         mysqli_query($conn, $sql);
-//         if(mysqli_affected_rows($conn))
-//         {
-//             return true;
-//         }else{
-//             return false;
-//         }
-//     }
-
-//     function getAccountList($userName)
-//     {
-//         $conn = getConnection();
-//         $sql = "select * from account where UserName='{$userName}'";
-//         $result = mysqli_query($conn, $sql);
-//         $list = [];
-//         $i = 0;
-//         while ($row = mysqli_fetch_assoc($result)) 
-//         {
-//             $list[$i] = $row;
-//             $i++;
-//         }
-//         return $list;
-//     }
-// ?>
+    function getExpense($userName){
+        $value = getRow($userName);
+        return $value['expense'];
+    }
+?>
 
 
 
