@@ -13,7 +13,7 @@
 	{		
 		if(login_db($userName, $password))
 		{
-			header('location: ../view/Home.php');
+			header('location: ../view/home.php');
 			setcookie('status', $userName, time()+3600, '/');
 		}
 		else

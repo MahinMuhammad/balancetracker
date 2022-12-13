@@ -17,13 +17,13 @@
         if($amountType == 'income'){
            if(addIncome($amount, $userName))
             {
-                header('location: ../view/Home.php');
+                header('location: ../view/home.php');
             } 
         }
         elseif ($amountType == 'expense') {
             if(addExpense($amount, $userName))
             {
-                header('location: ../view/Home.php');
+                header('location: ../view/home.php');
             } 
         }
         
